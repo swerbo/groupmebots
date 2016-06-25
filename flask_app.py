@@ -3,9 +3,11 @@
 import requests,re, json, pymysql
 from flask import Flask, request
 
+import UsefulStrings
+
 app = Flask(__name__)
 
-gmaps_key = "AIzaSyBl-d28wIUowTy9h9miWuvH9ao25zyvdD4"
+gmaps_key = UsefulStrings.gmaps_key
 
 @app.route('/')
 def hello_world():
@@ -19,7 +21,7 @@ def hello():
         summoner = r_json["name"]
         if re.search('@NYCBROS', r_json["text"].upper()):
             text = "NYC bros have been summoned by " + summoner
-            requests.post("https://api.groupme.com/v3/bots/post", json = {"text":text, "bot_id" :"10770ab7a49e7d081458c97ea6","attachments":[{"type":"mentions", "loci":[[0,1],[1,1],[2,1],[3,len(text)-4]],"user_ids":["5652869","16538128","16538127","5649747"]}]})
+            requests.post("https://api.groupme.com/v3/bots/post", json = {"text":text, "bot_id" : UsefulStrings.NYCBOT_ID,"attachments":[{"type":"mentions", "loci":[[0,1],[1,1],[2,1],[3,len(text)-4]],"user_ids": UsefulStrings.NYC_BROS}]})
     except:
         pass
     #with open("groupmestuff.txt","wb") as fo:
@@ -36,8 +38,7 @@ def bostonbros():
         summoner = r_json["name"]
         if re.search('@BOSTONBROS', r_json["text"].upper()):
             text = "Boston Bros have been summoned by " + summoner
-            #requests.post("https://api.groupme.com/v3/bots/post", json = {"text":text, "bot_id" :"9f21172cf73e54b723efc2ffb9","attachments":[{"type":"mentions", "loci":[[0,1],[1,len(text)]],"user_ids":["5652932","5033991"]}]})
-            requests.post("https://api.groupme.com/v3/bots/post", json = {"text":text, "bot_id" :"9f21172cf73e54b723efc2ffb9","attachments":[{"type":"mentions", "loci":[[0,1],[2,len(text)-2]],"user_ids":["5652932","5033991"]}]})
+            requests.post("https://api.groupme.com/v3/bots/post", json = {"text":text, "bot_id" : UsefulStrings.BOSTONBOT_ID,"attachments":[{"type":"mentions", "loci":[[0,1],[2,len(text)-2]],"user_ids": UsefulStrings.BOSTON_BROS}]})
     except:
         pass
     return "boston bros"
@@ -49,12 +50,12 @@ def mapsbot():
     if re.search('@MAPSBOT', r_json["text"].upper()):
         #get address
         #encode address
-        formatted_address="655+Grand+Street+Brooklyn,+NY"
-        r = requests.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + formatted_address + "&key=AIzaSyBl-d28wIUowTy9h9miWuvH9ao25zyvdD4",)
+        formatted_address="225+Manhattan+Ave+Brooklyn,+NY"
+        r = requests.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + formatted_address + "&key={0}".format(UsefulStrings.gmaps_key),)
         r_json = r.json()
         lat = str(r_json["results"][0]["geometry"]["location"]["lat"])
         lng = str(r_json["results"][0]["geometry"]["location"]["lng"])
-        requests.post("https://api.groupme.com/v3/bots/post", json = {"text":lat, "bot_id" :"f6e459ec15721a22ac93598ffd"})
+        requests.post("https://api.groupme.com/v3/bots/post", json = {"text":lat, "bot_id" : UsefulStrings.MAPS_BOT_ID})
     return "maps bros"
 
 
