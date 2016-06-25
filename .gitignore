@@ -89,4 +89,4 @@ ENV/
 .ropeproject
 
 #custom
-importantStrings.py
+UsefulStrings.py
