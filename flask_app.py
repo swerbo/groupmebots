@@ -1,6 +1,6 @@
 
 # A very simple Flask Hello World app for you to get started with...
-import requests,re, json, pymysql
+import requests,re, json,
 from flask import Flask, request
 
 import UsefulStrings
