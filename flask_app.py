@@ -1,6 +1,6 @@
 
 # A very simple Flask Hello World app for you to get started with...
-import requests,re, json,
+import requests,re, json
 from flask import Flask, request
 
 import UsefulStrings
@@ -55,7 +55,7 @@ def mapsbot():
         r_json = r.json()
         lat = str(r_json["results"][0]["geometry"]["location"]["lat"])
         lng = str(r_json["results"][0]["geometry"]["location"]["lng"])
-        requests.post("https://api.groupme.com/v3/bots/post", json = {"text":lat, "bot_id" : UsefulStrings.MAPS_BOT_ID})
+        requests.post("https://api.groupme.com/v3/bots/post", json = {"text":"", "bot_id" : UsefulStrings.MAPS_BOT_ID, "attachments":[{"type":"location", "lat":lat,"lng":lng,"name":"Run's House"}]})
     return "maps bros"
 
 
