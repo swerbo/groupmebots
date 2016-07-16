@@ -39,8 +39,7 @@ birthdaybros=[bros for bros in allbros if (bros.birthday.day == datetime.datetim
 @app.route('/birthdaybot/', methods = ['GET','POST'])
 def birthdaybot():
     for i in range(0,len(birthdaybros)):
-        #requests.post("https://api.groupme.com/v3/bots/post", json = {"text":"Happy Birthday to Beautiful "+birthdaybros[i].name+"!", "bot_id" : UsefulStrings.MAPS_BOT_ID}) #I have to figure out mentions
-        requests.post("https://api.groupme.com/v3/bots/post", json = {"text":"Happy Birthday to Beautiful "+birthdaybros[i].name+"!", "bot_id" : UsefulStrings.MAPS_BOT_ID, "attachments":[{"type":"mentions", "loci":[[0,1]],"user_ids": birthdaybros[i].groupme_id}]})
+        requests.post("https://api.groupme.com/v3/bots/post", json = {"text":"Happy Birthday to Beautiful "+birthdaybros[i].name+"!", "bot_id" : UsefulStrings.BIRTHDAY_BOT_ID, "attachments":[{"type":"mentions", "loci":[[0,1]],"user_ids": [str(birthdaybros[i].groupme_id)]}]})
     return "Birthday Brah"
 
 
